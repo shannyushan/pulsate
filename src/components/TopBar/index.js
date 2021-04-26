@@ -34,51 +34,62 @@ function TopBar() {
     window.pulse.send("close", "ss");
   };
   return (
-    <HStack id="menuBar" h="25px" w="100%" p="0 4px">
-      <Spacer cursor="pointer" style={{ WebkitAppRegion: "drag" }} />
+    <HStack
+      position="sticky"
+      top="0"
+      zIndex="100"
+      id="menuBar"
+      h="30px"
+      w="100%"
+      p="0"
+    >
+      <Spacer style={{ WebkitAppRegion: "drag", cursor: "pointer" }} />
       <Flex
         h="100%"
         maxH="20px"
-        maxWidth="80px"
         width="80px"
         justifyContent="space-evenly"
         margin="0 auto"
+        marginRight="10px"
       >
         <Flex
           borderRadius="50%"
           p="2px"
           border="1px solid rgba(200,200,200,0.6)"
           alignItems="center"
-          h="100%"
+          h="18px"
+          w="18px"
           cursor="pointer"
           onClick={MinApp}
           backgroundColor="orange"
         >
-          <VscChromeMinimize />
+          {/* <VscChromeMinimize /> */}
         </Flex>
         <Flex
           borderRadius="50%"
           p="2px"
           border="1px solid rgba(200,200,200,0.6)"
           alignItems="center"
-          h="100%"
+          h="18px"
+          w="18px"
           cursor="pointer"
           onClick={MaxApp}
           backgroundColor="green"
         >
-          <VscChromeMaximize />
+          {/* <VscChromeMaximize /> */}
         </Flex>
         <Flex
           borderRadius="50%"
           p="2px"
           border="1px solid rgba(200,200,200,0.6)"
           alignItems="center"
-          h="100%"
+          h="18px"
+          w="18px"
           cursor="pointer"
           onClick={CloseApp}
           backgroundColor="red"
         >
-          <VscChromeClose />
+          {/* <VscChromeClose /> */}
         </Flex>
       </Flex>
     </HStack>

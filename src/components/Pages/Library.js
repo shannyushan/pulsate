@@ -18,7 +18,7 @@ function Library() {
   return (
     <>
       <Container w="100%" height="auto" minH="500px" maxW="100%">
-        <VStack w="100%" height="100%" minH="inherit">
+        <VStack w="100%" height="100%" minH="inherit" overflowY="auto">
           {!isLoading &&
             musicLibrary.map((row, index) => (
               <MusicBlock
@@ -55,7 +55,7 @@ function MusicBlock({ name, id, src }) {
       height="80px"
       width="100%"
       p="10px"
-      border="1px solid yellow"
+      border="1px solid #68D391"
       cursor="pointer"
       onClick={() => dispatchMusic(src)}
     >

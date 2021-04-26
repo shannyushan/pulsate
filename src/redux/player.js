@@ -1,5 +1,5 @@
 const initialState = {
-  isPlaying: true,
+  isPlaying: false,
   currentPlaying:
     "C:\\Users\\Wizard__Vodemort\\Music\\Ed Sheeran - ÷\\01 - Eraser.mp3",
   nextSong: null,

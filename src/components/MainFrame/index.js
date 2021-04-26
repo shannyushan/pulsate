@@ -190,6 +190,30 @@ function MainFrame() {
                 display="flex"
                 alignItems="center"
                 cursor="pointer"
+                onClick={() => setPageState("albums")}
+                _hover={{
+                  background: "#47455da6",
+                }}
+              >
+                <IoAlbumsOutline style={{ width: "20px", height: "100%" }} />
+                <Link
+                  textTransform="uppercase"
+                  paddingLeft="10px"
+                  style={{
+                    letterSpacing: "1px",
+                    fontWeight: "100",
+                    fontSize: "0.8em",
+                  }}
+                >
+                  Folders
+                </Link>
+              </ListItem>
+              <ListItem
+                h="40px"
+                paddingLeft="10px"
+                display="flex"
+                alignItems="center"
+                cursor="pointer"
                 onClick={() => setPageState("favourites")}
                 _hover={{
                   background: "#47455da6",
@@ -254,7 +278,7 @@ function MainFrame() {
       {/* page */}
       <Box
         id="page"
-        width="100%"
+        width="calc(100% - 250px)"
         m="0"
         minW="calc(100% - 250px)"
         height="100%"
@@ -264,7 +288,7 @@ function MainFrame() {
         // backgroundColor="#1d1d29"
       >
         <TopBar />
-        <VStack height="calc(100% - 25px)">
+        <VStack height="calc(100% - 30px)">
           <Search />
           {renderPage(pageState)}
         </VStack>

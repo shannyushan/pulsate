@@ -102,8 +102,8 @@ app.on("ready", async () => {
       );
     }
   });
-  await session.defaultSession.loadExtension(reactDevToolsPath);
-  await session.defaultSession.loadExtension(reduxDevToolsPath);
+  // await session.defaultSession.loadExtension(reactDevToolsPath);
+  // await session.defaultSession.loadExtension(reduxDevToolsPath);
   createWindow();
 });
 
