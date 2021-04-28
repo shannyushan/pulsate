@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Box, Flex, VStack, HStack } from "@chakra-ui/react";
-import { useSelector, connect } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 
 function Player(props) {
-  // const PlayerState = useSelector((state => state.Player));
-  // const [isPlaying, setIsPlaying] = useState(PlayerState.isPlaying);
+  const [percent, setPercent] = useState(0);
+  const [duration, setDuration] = useState(null);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     playSong(props.src);
   }, [props]);
@@ -12,12 +15,65 @@ function Player(props) {
   function playSong(song) {
     var audio = document.getElementById("player");
     audio.setAttribute("src", `safe-protocol://${song}`);
-    console.log(song);
     audio.play();
   }
   function pausePlay() {
     var player = document.getElementById("player");
     player.paused ? player.play() : player.pause();
+  }
+  async function getSRCfromDB(id) {
+    const resp = await window.pulse.invoke("getSRC", id);
+    console.log("from player", resp);
+    if (resp.success) {
+      return resp.response[0].src;
+    } else {
+      console.log("err", resp.response);
+      return null;
+    }
+  }
+  async function prevPlay(id) {
+    const src = await getSRCfromDB(id - 1);
+    const data = {
+      isPlaying: true,
+      playerState: "playing",
+      currentPlaying: src,
+      playlistName: "",
+      playIndex: id - 1,
+    };
+    dispatcher(data);
+  }
+  async function nextPlay(id) {
+    const src = await getSRCfromDB(id + 1);
+    const data = {
+      isPlaying: true,
+      playerState: "playing",
+      currentPlaying: src,
+      playlistName: "",
+      playIndex: id + 1,
+    };
+    dispatcher(data);
+  }
+
+  function dispatcher(data) {
+    dispatch({
+      type: "UPDATE_PLAYER",
+      payload: data,
+    });
+  }
+
+  function seeker(e) {
+    const { duration, currentTime } = e.target;
+    setDuration(duration);
+    const percent = (currentTime / duration) * 100;
+    setPercent(percent);
+  }
+  function changeDuration(e) {
+    const Dur_point = (e.nativeEvent.offsetX / e.target.offsetWidth) * duration;
+    const widthpoint = (e.nativeEvent.offsetX / e.target.offsetWidth) * 100;
+    setPercent(widthpoint);
+    console.log(Dur_point);
+    document.getElementById("player").currentTime = Dur_point;
+    // audio.setPercent();
   }
   return (
     <HStack
@@ -34,13 +90,15 @@ function Player(props) {
         <Flex
           id="seeker"
           width="100%"
-          height="10px"
+          height="8px"
           border="1px solid green"
           borderRadius="full"
           alignItems="center"
+          cursor="pointer"
+          onClick={(e) => changeDuration(e)}
         >
           <Box
-            width="30%"
+            width={`${percent}%`}
             height="100%"
             bg="green.300"
             style={{
@@ -49,17 +107,17 @@ function Player(props) {
             }}
           ></Box>
           <Box
-            w="15px"
-            h="15px"
+            w="10px"
+            h="10px"
             borderRadius="50%"
-            marginLeft="-15px"
+            marginLeft="-10px"
             bg="green.500"
           ></Box>
         </Flex>
         <HStack
           alignItems="center"
           w="100px"
-          height="calc(100% - 20px)"
+          height="calc(100% - 15px)"
           justifyContent="space-evenly"
           id="controls"
           width="100%"
@@ -67,14 +125,31 @@ function Player(props) {
           margin="0 auto"
           height="40px"
         >
-          <audio hidden id="player" preload="metadata" controls></audio>
-          <Box id="playPrev" p="10px">
+          <audio
+            hidden
+            id="player"
+            preload="metadata"
+            controls
+            onPlay={() => setPercent(0.1)}
+            onTimeUpdate={(e) => seeker(e)}
+          ></audio>
+          <Box
+            id="playPrev"
+            cursor="pointer"
+            p="10px"
+            onClick={() => prevPlay(props.id)}
+          >
             prev
           </Box>
           <Box p="10px" cursor="pointer" id="play" onClick={() => pausePlay()}>
             play
           </Box>
-          <Box id="nextPlay" p="10px">
+          <Box
+            id="nextPlay"
+            cursor="pointer"
+            p="10px"
+            onClick={() => nextPlay(props.id)}
+          >
             Next
           </Box>
         </HStack>
@@ -86,6 +161,7 @@ function Player(props) {
 function mapStateToProps(state, ownProps) {
   return {
     src: state.Player.currentPlaying,
+    id: state.Player.playIndex,
   };
 }
 export default connect(mapStateToProps)(Player);

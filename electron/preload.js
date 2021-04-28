@@ -11,6 +11,13 @@ contextBridge.exposeInMainWorld("pulse", {
       ipcRenderer.send(channel, data);
     }
   },
+  sendSync: (channel, data) => {
+    // whitelist channels
+    let validChannels = ["getSRC"];
+    if (validChannels.includes(channel)) {
+      ipcRenderer.send(channel, data);
+    }
+  },
   receive: (channel, func) => {
     let validChannels = ["fromMain"];
     if (validChannels.includes(channel)) {
@@ -20,7 +27,7 @@ contextBridge.exposeInMainWorld("pulse", {
   },
   invoke: (channel, data) => {
     // whitelist invoke channels
-    let validChannels = ["getMusic"];
+    let validChannels = ["getMusic", "getSRC"];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);
     }

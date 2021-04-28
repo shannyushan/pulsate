@@ -1,9 +1,7 @@
 const initialState = {
   isPlaying: false,
-  currentPlaying:
-    "C:\\Users\\Wizard__Vodemort\\Music\\Ed Sheeran - ÷\\01 - Eraser.mp3",
+  currentPlaying: null,
   nextSong: null,
-  musicExt: "mp3",
   playlistName: "default",
   playlist: [],
   playIndex: 0,
@@ -19,6 +17,7 @@ function playerReducer(state = initialState, action) {
         playerState: "playing",
         currentPlaying: action.payload.currentPlaying,
         playlistName: action.payload.playlistName,
+        playIndex: action.payload.playIndex,
       };
     case "CLEAR_PLAYER":
       return {

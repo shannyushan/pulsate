@@ -43,7 +43,8 @@ function MusicBlock({ name, id, src }) {
       isPlaying: true,
       playerState: "playing",
       currentPlaying: src,
-      playlistName: "john",
+      playlistName: "",
+      playIndex: id,
     };
     dispatch({
       type: "UPDATE_PLAYER",

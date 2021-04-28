@@ -64,5 +64,41 @@ const getSongs = async () => {
   const result = await db.query("SELECT * FROM songs", []);
   return result;
 };
+// const getSRC = (id) => {
+//   try {
+//     db.run(`SELECT src FROM songs`, [id], (err, row) => {
+//       if (err) {
+//         const msg = {
+//           success: false,
+//           response: `error occured while fetching ${id} ${err.message}`,
+//         };
+//         return msg;
+//       }
+//       if (row) {
+//         const msg = {
+//           success: true,
+//           response: row.src,
+//         };
+//         return msg;
+//       } else {
+//         const msg = {
+//           success: false,
+//           response: `No songs Found by the ${id}`,
+//         };
+//         return msg;
+//       }
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     const msg = {
+//       success: false,
+//       response: `db error cannot fetch the specified id ${id}`,
+//     };
+//     return msg;
+//   }
+// };
 
-module.exports = getSongs;
+module.exports = {
+  db,
+  getSongs,
+};

@@ -3,7 +3,7 @@ const os = require("os");
 const { app, BrowserWindow, ipcMain, session, protocol } = require("electron");
 const path = require("path");
 const url = require("url");
-const getSongs = require("./db");
+const { db, getSongs } = require("./db");
 
 let mainWindow;
 
@@ -122,6 +122,24 @@ app.on("activate", () => {
 ipcMain.handle("getMusic", async (event, args) => {
   const result = await getSongs();
   return result;
+});
+
+ipcMain.handle("getSRC", async (event, id) => {
+  const resp = await db.query(`SELECT * FROM songs WHERE songs.id = ?`, [id]);
+  console.log(resp);
+  if (resp) {
+    const msg = {
+      success: true,
+      response: resp["rows"],
+    };
+    return msg;
+  } else {
+    const msg = {
+      success: false,
+      response: `No songs Found by the ${id}`,
+    };
+    return msg;
+  }
 });
 
 ipcMain.on("toMain", (event, args) => {
