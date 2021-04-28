@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Flex, VStack, HStack } from "@chakra-ui/react";
 import { useSelector, useDispatch, connect } from "react-redux";
+import { AiOutlinePauseCircle, AiOutlinePlayCircle } from "react-icons/ai";
+import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 
 function Player(props) {
   const [percent, setPercent] = useState(0);
   const [duration, setDuration] = useState(null);
+  const audioRef = useRef();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    var audio = document.getElementById("player");
+
     playSong(props.src);
   }, [props]);
 
@@ -137,20 +142,28 @@ function Player(props) {
             id="playPrev"
             cursor="pointer"
             p="10px"
+            height="40px"
             onClick={() => prevPlay(props.id)}
           >
-            prev
+            <MdSkipPrevious />
           </Box>
-          <Box p="10px" cursor="pointer" id="play" onClick={() => pausePlay()}>
-            play
+          <Box
+            height="40px"
+            p="10px"
+            cursor="pointer"
+            id="play"
+            onClick={() => pausePlay()}
+          >
+            <AiOutlinePauseCircle />
           </Box>
           <Box
             id="nextPlay"
             cursor="pointer"
             p="10px"
+            height="40px"
             onClick={() => nextPlay(props.id)}
           >
-            Next
+            <MdSkipNext />
           </Box>
         </HStack>
       </VStack>

@@ -21,6 +21,7 @@ import {
   IoPersonOutline,
   IoHeartOutline,
 } from "react-icons/io5";
+import { AiOutlineFolder } from "react-icons/ai";
 import Search from "./../Search";
 import Albums from "./../Pages/Albums";
 import Artists from "./../Pages/Artists";
@@ -96,7 +97,7 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("discover")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
                 <IoHomeOutline style={{ width: "20px", height: "100%" }} />
@@ -120,7 +121,7 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("library")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
                 <IoLibraryOutline style={{ width: "20px", height: "100%" }} />
@@ -144,7 +145,7 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("artists")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
                 <IoPersonOutline style={{ width: "20px", height: "100%" }} />
@@ -168,7 +169,7 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("albums")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
                 <IoAlbumsOutline style={{ width: "20px", height: "100%" }} />
@@ -192,10 +193,10 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("albums")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
-                <IoAlbumsOutline style={{ width: "20px", height: "100%" }} />
+                <AiOutlineFolder style={{ width: "20px", height: "100%" }} />
                 <Link
                   textTransform="uppercase"
                   paddingLeft="10px"
@@ -216,7 +217,7 @@ function MainFrame() {
                 cursor="pointer"
                 onClick={() => setPageState("favourites")}
                 _hover={{
-                  background: "#47455da6",
+                  background: "#7b82887d",
                 }}
               >
                 <IoHeartOutline style={{ width: "20px", height: "100%" }} />
