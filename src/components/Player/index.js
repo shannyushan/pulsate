@@ -12,18 +12,17 @@ function Player(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var audio = document.getElementById("player");
-
     playSong(props.src);
   }, [props]);
 
   function playSong(song) {
-    var audio = document.getElementById("player");
+    // var audio = document.getElementById("player");
+    const audio = audioRef.current;
     audio.setAttribute("src", `safe-protocol://${song}`);
     audio.play();
   }
   function pausePlay() {
-    var player = document.getElementById("player");
+    const player = audioRef.current;
     player.paused ? player.play() : player.pause();
   }
   async function getSRCfromDB(id) {
@@ -77,7 +76,7 @@ function Player(props) {
     const widthpoint = (e.nativeEvent.offsetX / e.target.offsetWidth) * 100;
     setPercent(widthpoint);
     console.log(Dur_point);
-    document.getElementById("player").currentTime = Dur_point;
+    audioRef.current.currentTime = Dur_point;
     // audio.setPercent();
   }
   return (
@@ -135,6 +134,7 @@ function Player(props) {
             id="player"
             preload="metadata"
             controls
+            ref={audioRef}
             onPlay={() => setPercent(0.1)}
             onTimeUpdate={(e) => seeker(e)}
           ></audio>
